@@ -1,7 +1,11 @@
 import * as fs from 'fs';
+import path from 'path';
+import url from 'url';
 
 const create = async () => {
-    fs.open('src/fs/files/fresh.txt', 'wx', function(err, file) {
+    const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+    const pathToFile = path.join(__dirname, '/files/fresh.txt');
+    fs.open(pathToFile, 'wx', function(err, file) {
         if (err) {
             if (err.code === 'EEXIST') {
                 throw new Error('FS operation failed');
