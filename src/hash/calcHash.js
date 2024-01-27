@@ -9,10 +9,8 @@ const pathToFile = path.join(__dirname, '/files/fileToCalculateHashFor.txt');
 const hash = createHash('sha256');
 
 const calculateHash = async () => {
-    fs.readFile(pathToFile, { encoding: 'utf-8' }, function(err, data) {
-        if (err) {
-            throw new Error(err);
-        }
+    const stream = fs.createReadStream(pathToFile, { encoding: 'utf-8' });
+    stream.on('data', function(data) {
         hash.update(data);
         console.log(hash.digest('hex'));
     });
